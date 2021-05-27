@@ -1,9 +1,9 @@
 import React from 'react';
+import SideNavigationBar from "./Components/SideNavigationBar";
 
 const Dashboard = () => {
     return(
-        <div>
-        </div>
+        <SideNavigationBar/>
     );
 };
 

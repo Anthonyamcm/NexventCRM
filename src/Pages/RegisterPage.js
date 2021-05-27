@@ -80,7 +80,7 @@ const RegisterPage = props => {
                                 <div className="navbar-menu" id="mainNav">
                                     <div className="navbar-end">
                                         <p className="navbar-item is-size-5">Already have an account ?</p>
-                                        <a href="/" className="button is-size-5">Sign In</a>
+                                        <a href="/login" className="button is-size-5">Sign In</a>
                                     </div>
                                 </div>
                             </div>

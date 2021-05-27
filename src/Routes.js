@@ -1,17 +1,19 @@
 import React from 'react';
 import LoginPage from './Pages/LoginPage';
 import RegisterPage from './Pages/RegisterPage';
-import {Switch} from 'react-router-dom';
+import Dashboard  from './Views/Dashboard'
+import {Switch, Redirect} from 'react-router-dom';
 import RouteNoAuth from './Components/RouteNoAuth/RouteNoAuth';
+import RouteAuth from './Components/Route/Route'
 import MainLayout from "./Layouts";
 
 export const Routes = () => {
     return (
-        <div>
             <Switch>
-                <RouteNoAuth exact path="/" component={LoginPage} layout={MainLayout} />
-                <RouteNoAuth exact path="/Register" component={RegisterPage} layout={MainLayout}/>
+                <Redirect exact from='/' to='/Dashboard' />
+                <RouteNoAuth exact path="/login" component={LoginPage} layout={MainLayout} />
+                <RouteNoAuth exact path="/register" component={RegisterPage} layout={MainLayout}/>
+                <RouteAuth exact path="/Dashboard" component={Dashboard} layout={MainLayout}/>
             </Switch>
-        </div>
     );
 };

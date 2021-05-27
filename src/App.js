@@ -1,9 +1,21 @@
-import logo from './logo.svg';
+import React from 'react';
+import { Router } from 'react-router-dom';
+import { Routes } from './Routes';
+import { AuthProvider } from './Providers/AuthProvider';
+import { createBrowserHistory } from 'history';
+
+const browserHistory = createBrowserHistory();
 
 function App() {
+
   return (
-    <div className="App">
-    </div>
+      <React.Fragment>
+        <Router history={browserHistory}>
+            <AuthProvider>
+              <Routes />
+            </AuthProvider>
+        </Router>
+      </React.Fragment>
   );
 }
 

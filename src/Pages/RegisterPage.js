@@ -1,6 +1,72 @@
 import React from 'react';
+import { useContext, useCallback,useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect, useHistory } from 'react-router-dom';
+import { AuthContext } from '../Providers/AuthProvider';
+import { createUser } from '../Store/Actions';
 
 const RegisterPage = props => {
+    let history = useHistory();
+    const dispatch = useDispatch();
+    const { currentUser } = useContext(AuthContext);
+    const [companySize, setCompanySize] = React.useState('');
+    const [companyCountry, setCompanyCountry] = React.useState('');
+    const userCreatedSuccess = useSelector((state) => state.user.success);
+    const userCreatedError = useSelector((state) => state.user.error);
+
+    const handleCompanySizeChange = (event) => {
+        setCompanySize(event.target.value);
+    };
+
+    const handleCountryChange = (event) => {
+        setCompanyCountry(event.target.value);
+    };
+
+    const handleSignUp = useCallback(
+        (event) => {
+            event.preventDefault();
+            const {
+                companyName,
+                companyAccountNumber,
+                email,
+                password,
+                zipCode,
+                address1,
+                address2
+            } = event.target.elements;
+
+            let userData = {
+                companyName: companyName.value,
+                companyAccountNumber: companyAccountNumber.value,
+                companySize: companySize,
+                companyCountry: companyCountry,
+                zipCode: zipCode.value,
+                addressLine1: address1.value,
+                addressLine2: address2.value,
+                email: email.value,
+            };
+
+            dispatch(createUser(email.value, password.value, userData));
+        },
+        [companySize, companyCountry, dispatch],
+    );
+
+    useEffect(() => {
+        if (userCreatedSuccess) {
+            history.push('/');
+        }
+    }, [dispatch, history, userCreatedSuccess]);
+
+    useEffect(() => {
+        if (userCreatedError) {
+
+        }
+    }, [dispatch, userCreatedError]);
+
+    if (currentUser) {
+        return <Redirect to='/' />;
+    }
+
     return (
         <div className="app-container">
             <div className="columns is-desktop">
@@ -19,32 +85,36 @@ const RegisterPage = props => {
                                 </div>
                             </div>
                         </nav>
-                        <div className="form-content">
+                        <div className="columns is-desktop is-centered">
+                        <div className="form-content column is-half mt-6">
                             <h1 className="title is-2">Welcome to Nexvent</h1>
                             <h2 className="subtitle is-4">Register your account</h2>
-                            <form className="form columns is-multiline">
+                            <form className="form columns is-multiline" onSubmit={handleSignUp}>
                                 <div className="field mt-2 column is-full pt-0">
                                     <label className="label">Company Name</label>
                                     <div className="control">
-                                        <input className="input" type="text" placeholder="e.g. Nexvent"/>
+                                        <input className="input" type="text" placeholder="e.g. Nexvent" name='companyName'/>
                                     </div>
                                 </div>
                                 <div className="field column is-one-third pt-0">
                                     <label className="label">Company Number</label>
                                     <div className="control">
-                                        <input className="input" type="text" placeholder="e.g. SC12345"/>
+                                        <input className="input" type="text" placeholder="e.g. SC12345" name="companyAccountNumber"/>
                                     </div>
                                 </div>
                                 <div className="field column is-one-third pt-0">
                                     <label className="label">Company Size</label>
                                     <p className="control">
                                     <span className="select">
-                                        <select>
-                                            <option>Please select size</option>
-                                            <option>1-50 Employees</option>
-                                            <option>51-100 Employees</option>
-                                            <option>101-250 Employees</option>
-                                            <option>250+ Employees</option>
+                                        <select
+                                            value={companySize}
+                                            onChange={handleCompanySizeChange}
+                                        >
+                                            <option>Please select</option>
+                                            <option value="1-50">1-50 Employees</option>
+                                            <option value="51-100">51-100 Employees</option>
+                                            <option value="101-250">101-250 Employees</option>
+                                            <option value="250+">250+ Employees</option>
                                         </select>
                                     </span>
                                     </p>
@@ -53,9 +123,12 @@ const RegisterPage = props => {
                                     <label className="label">Country</label>
                                     <p className="control">
                                     <span className="select">
-                                        <select>
+                                        <select
+                                            value={companyCountry}
+                                            onChange={handleCountryChange}
+                                        >
                                             <option>Please select</option>
-                                            <option value="Afganistan">Afghanistan</option>
+                                            <option value="Afghanistan">Afghanistan</option>
                                             <option value="Albania">Albania</option>
                                             <option value="Algeria">Algeria</option>
                                             <option value="American Samoa">American Samoa</option>
@@ -305,48 +378,49 @@ const RegisterPage = props => {
                                     </span>
                                     </p>
                                 </div>
-                                <div className="field column is-one-quarter pt-0">
+                                <div className="field column is-one-third pt-0">
                                     <label className="label">Post code/Zip code</label>
                                     <div className="control">
-                                        <input className="input" type="text" placeholder="e.g G311JX"/>
+                                        <input className="input" type="text" placeholder="e.g G311JX" name="zipCode"/>
                                     </div>
                                 </div>
-                                <div className="field column is-three-quarters pt-0">
+                                <div className="field column is-two-thirds pt-0">
                                     <label className="label">Address line 1</label>
                                     <div className="control">
-                                        <input className="input" type="text" placeholder="e.g G311JX"/>
+                                        <input className="input" type="text" placeholder="e.g 87 Main Street" name="address1"/>
                                     </div>
                                 </div>
                                 <div className="field column is-full pt-0">
                                     <label className="label">Address line 2</label>
                                     <div className="control">
-                                        <input className="input" type="text" placeholder="e.g G311JX"/>
+                                        <input className="input" type="text" placeholder="e.g Office 12" name="address2"/>
                                     </div>
                                 </div>
                                 <div className="field column is-full pt-0">
                                     <label className="label">Email</label>
                                     <div className="control">
-                                        <input className="input" type="email" placeholder="e.g name@company.com"/>
+                                        <input className="input" type="email" placeholder="e.g name@company.com" name="email"/>
                                     </div>
                                 </div>
                                 <div className="field column is-full pt-0">
                                     <label className="label">Password</label>
                                     <div className="control">
-                                        <input className="input" type="password" placeholder="••••••••••••••••"/>
+                                        <input className="input" type="password" placeholder="••••••••••••••••" name='password'/>
                                     </div>
                                 </div>
-                                <div className="column is-one-fifths">
-                                    <button className="button is-primary is-medium">Register</button>
+                                <div className="column is-one-quarter">
+                                    <button className="button is-primary is-medium" type="submit" >Register</button>
                                 </div>
-                                <div className="column is-four-fifths">
+                                <div className="column is-three-quarters">
                                     <p>
-                                        By signing up you automatically agree to our Terms & Conditions and Privacy Policy.
+                                        By signing up you agree to our Terms & Conditions and Privacy Policy.
                                     </p>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     );

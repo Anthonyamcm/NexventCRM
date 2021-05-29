@@ -11,7 +11,7 @@ import Create from "./Views/Create";
 export const Routes = () => {
     return (
             <Switch>
-                <Redirect exact from='/' to='/Dashboard' />
+                <Redirect exact from='/' to='/Create' />
                 <RouteNoAuth exact path="/login" component={LoginPage} layout={MainLayout} />
                 <RouteNoAuth exact path="/register" component={RegisterPage} layout={MainLayout}/>
                 <RouteAuth exact path="/Dashboard" component={Dashboard} layout={MainLayout}/>

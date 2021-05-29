@@ -7,6 +7,7 @@
 
 body, button, input, select, textarea {
   margin: 0;
+  color: #463853 !important;
   font-family: "GT Eesti Display" !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -28,8 +29,36 @@ body, button, input, select, textarea {
   border: none !important;
 }
 
-.is-primary-light{
-  background: linear-gradient(90deg, rgba(0,198,255,1) 0%, rgba(0,114,255,0.8) 100%) !important;
+.is-warning{
+  background: linear-gradient(90deg, rgba(239, 71, 58,1) 0%, rgba(203, 45, 62,1) 100%) !important;
   border: none !important;
 }
 
+.is-success{
+  background: linear-gradient(90deg, rgba(168, 224, 99,1) 0%, rgba(86, 171, 47,1) 100%) !important;
+  border: none !important;
+}
+
+.graphContainer {
+  width: 56.5vw;
+  height: 25vh;
+  display: flex;
+}
+
+@media only screen and (max-width: 600px) {
+  .graphContainer {
+    width: 80vw;
+  }
+}
+
+.graphContainer-doughnut{
+  width: 15vw;
+  height: 25vh;
+  display: flex;
+}
+
+.graphContainer-Bar{
+  width: 76.5vw;
+  height: 20vh;
+  display: flex;
+}

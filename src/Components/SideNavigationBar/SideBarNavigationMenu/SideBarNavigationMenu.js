@@ -29,7 +29,7 @@ class SideBarNavigationMenu extends React.Component{
                     </a>
                 </div>
                 <div className="column is-full pb-4">
-                    <a href="/Dashboard"className="pl-5 is-size-5" ><span className="icon-text">
+                    <a href="/Dashboard" className="pl-5 is-size-5" ><span className="icon-text">
                             <span className="icon">
                                 <FontAwesomeIcon icon={"credit-card"}/>
                             </span>

@@ -1,33 +1,18 @@
 import React from "react";
+import DashBoardDataHeaderSectionOne from "./DashBoardDataHeaderSectionOne/DashBoardDataHeaderSectionOne";
+import DashBoardDataHeaderSectionTwo from "./DashBoardDataHeaderSectionTwo/DashBoardDataHeaderSectionTwo";
+import DashBoardDataHeaderSectionThree from "./DashBoardDataHeaderSectionThree/DashBoardDataHeaderSectionThree";
+import DashBoardDataHeaderSectionFour from "./DashBoardDataHeaderSectionFour/DashBoardDataHeaderSectionFour";
+
 
 class DashoardDataHeader extends React.Component{
     render() {
         return(
             <div className="tile is-ancestor">
-                <div className="tile is-parent">
-                    <article className="tile is-child box">
-                        <p className="title">One</p>
-                        <p className="subtitle">Subtitle</p>
-                    </article>
-                </div>
-                <div className="tile is-parent">
-                    <article className="tile is-child box">
-                        <p className="title">Two</p>
-                        <p className="subtitle">Subtitle</p>
-                    </article>
-                </div>
-                <div className="tile is-parent">
-                    <article className="tile is-child box">
-                        <p className="title">Three</p>
-                        <p className="subtitle">Subtitle</p>
-                    </article>
-                </div>
-                <div className="tile is-parent">
-                    <article className="tile is-child box">
-                        <p className="title">Four</p>
-                        <p className="subtitle">Subtitle</p>
-                    </article>
-                </div>
+                <DashBoardDataHeaderSectionOne/>
+                <DashBoardDataHeaderSectionTwo/>
+                <DashBoardDataHeaderSectionThree/>
+                <DashBoardDataHeaderSectionFour/>
             </div>
         )
     }

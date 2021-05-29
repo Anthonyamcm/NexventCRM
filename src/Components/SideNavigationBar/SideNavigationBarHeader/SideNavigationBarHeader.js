@@ -1,4 +1,4 @@
-import logo from '../../../../../nexvent-logo'
+import logo from '../../../nexvent-logo'
 import React from 'react';
 
 

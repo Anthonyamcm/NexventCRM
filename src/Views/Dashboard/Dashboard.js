@@ -1,5 +1,5 @@
 import React from 'react';
-import SideNavigationBar from "./Components/SideNavigationBar";
+import SideNavigationBar from "../../Components/SideNavigationBar";
 import DashboardData from "./Components/DashboardData/DashboardData";
 
 const Dashboard = () => {

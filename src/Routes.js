@@ -7,6 +7,7 @@ import RouteNoAuth from './Components/RouteNoAuth/RouteNoAuth';
 import RouteAuth from './Components/Route/Route'
 import MainLayout from "./Layouts";
 import Create from "./Views/Create";
+import {CreateEventProvider} from "./Providers/CreateEventProvider";
 
 export const Routes = () => {
     return (
@@ -15,7 +16,7 @@ export const Routes = () => {
                 <RouteNoAuth exact path="/login" component={LoginPage} layout={MainLayout} />
                 <RouteNoAuth exact path="/register" component={RegisterPage} layout={MainLayout}/>
                 <RouteAuth exact path="/Dashboard" component={Dashboard} layout={MainLayout}/>
-                <RouteAuth exact path="/Create" component={Create} layout={MainLayout}/>
+                <RouteAuth exact path="/Create" component={Create} provider={CreateEventProvider} layout={MainLayout}/>
             </Switch>
     );
 };

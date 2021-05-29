@@ -1,6 +1,7 @@
 import React from 'react';
 import SideNavigationBar from "../../Components/SideNavigationBar";
-import CreateBody from "./CreateBody/CreateBody";
+import EventImage from "./Components/EventImage/EventImage";
+import CreateEvent from "./CreateEvent";
 
 const Create = () => {
     return(
@@ -14,8 +15,9 @@ const Create = () => {
                         </article>
                     </div>
                 </div>
+                <CreateEvent/>
             </div>
-            <CreateBody/>
+
         </div>
     );
 };

@@ -14,6 +14,8 @@ const steps = [
 export const CreateEventProvider = ({ children }) => {
     const [step1Context, setStep1Context] = useState(null);
     const [step2Context, setStep2Context] = useState(null);
+    const [step3Context, setStep3Context] = useState(null);
+    const [imageContext, setImageContext] = useState(null);
 
     const getDatesInTimeStamp = (selectedDates) => {
         return selectedDates.map((date) => {
@@ -39,6 +41,8 @@ export const CreateEventProvider = ({ children }) => {
         const EventObject = {
             ...step1Context,
             ...step2Context,
+            ...step3Context,
+            ...imageContext,
         };
         EventObject.selectedDates = getDatesInTimeStamp(EventObject.selectedDates);
 
@@ -66,6 +70,10 @@ export const CreateEventProvider = ({ children }) => {
                 setStep1Context,
                 step2Context,
                 setStep2Context,
+                step3Context,
+                setStep3Context,
+                imageContext,
+                setImageContext,
                 submitEventHandler,
                 handleNext,
                 handleBack,

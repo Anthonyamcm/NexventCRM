@@ -9,7 +9,7 @@ import {faImages, faEdit, faReceipt} from '@fortawesome/free-solid-svg-icons';
 
 fontawesome.library.add(faImages, faEdit, faReceipt);
 
-function getStepContent(step) {
+function getStepContent(step, NexventUser) {
     switch (step) {
         case 0:
             return <EventImage/>;
@@ -23,7 +23,7 @@ function getStepContent(step) {
 }
 
 const CreateEvent = () => {
-    const { activeStep, steps } = useContext(CreateEventContext);
+    const { activeStep, steps} = useContext(CreateEventContext);
 
     return (
         <div>

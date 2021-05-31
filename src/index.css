@@ -19,6 +19,10 @@ body, button, input, select, textarea {
   height: 100vh;
 }
 
+.is-customSize{
+  font-size: 0.85rem;
+}
+
 .background{
   background: linear-gradient(90deg, rgba(0,198,255,1) 0%, rgba(0,114,255,1) 100%);
   height: 100vh;
@@ -26,16 +30,6 @@ body, button, input, select, textarea {
 
 .is-primary{
   background: linear-gradient(90deg, rgba(0,198,255,1) 0%, rgba(0,114,255,1) 100%) !important;
-  border: none !important;
-}
-
-.is-warning{
-  background: linear-gradient(90deg, rgba(239, 71, 58,1) 0%, rgba(203, 45, 62,1) 100%) !important;
-  border: none !important;
-}
-
-.is-success{
-  background: linear-gradient(90deg, rgba(168, 224, 99,1) 0%, rgba(86, 171, 47,1) 100%) !important;
   border: none !important;
 }
 
@@ -61,4 +55,47 @@ body, button, input, select, textarea {
   width: 76.5vw;
   height: 20vh;
   display: flex;
+}
+
+.image-container{
+  height: 63vh;
+  width: 20vw;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position:relative;
+  border-radius: 21px !important;
+  padding: 0 !important;
+}
+
+.event-footer{position:absolute;
+  width: 100%;
+  border-radius: 0 0 21px 21px;
+  background: rgba(0,0,0,0.35);
+  bottom:0;
+}
+
+.image-head{
+  width: 100%;
+  height: 40%;
+  border-radius: 21px 21px 0 0;
+}
+
+.event-details{
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  margin: auto;
+  top: 1rem;
+  bottom: 0rem;
+  left: 1rem;
+  right: 1rem;
+  border-radius: 21px;
+  box-shadow: 0px 0px 30px 0px #7D7D7D;
+  background: rgba(250,250,250,1);
+}
+
+.has-background-match {
+  background: rgba(250,250,250,1)!important;
+  border: none!important;
 }

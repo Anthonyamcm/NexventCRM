@@ -6,6 +6,7 @@ import {CreateEventContext} from '../../../../Providers/CreateEventProvider';
 import NextPageButton from "../../../../Components/NextPageButton/NextPageButton";
 import SingleDate from "../../../../Components/SingleDatePicker/SingleDate";
 import Select from 'react-select'
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 
 
 fontawesome.library.add(faClock, faCalendarAlt,faMapMarker, faUpload);
@@ -14,6 +15,12 @@ fontawesome.library.add(faClock, faCalendarAlt,faMapMarker, faUpload);
 
 
 const EventDetails = () => {
+
+
+
+    const [place, setPlace] = useState(null);
+
+
 
     useEffect(() => {
         if (step2Context) {
@@ -25,6 +32,7 @@ const EventDetails = () => {
     const [selectedOptions, setSelectedOptions] = useState([]);
 
     const [buttonDisabled, setButtonDisabled] = useState(true), [step2Details, setStep2Details] = useState({
+        eventAddress: null,
         eventDescription: '',
         tags: [],
 
@@ -46,20 +54,27 @@ const EventDetails = () => {
             ...step2Details,
             [event.target.name]: event.target.value,
         });
+        console.log(step2Details.eventAddress)
     }, setValue = (selectedOptions) => {
         selectedOptions.map( selectedOption =>
             setSelectedOptions([ ...selectedOptions, selectedOption])
         );
         console.log(selectedOptions)
-    }, {tags, eventDescription} = step2Details;
-
+    }, {eventAddress, tags, eventDescription} = step2Details;
 
 
     const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' }
+        { value: 'festival', label: 'Festival' },
+        { value: 'performance', label: 'Performance' },
+        { value: 'fair', label: 'Fair' },
+        { value: 'drag', label: 'Drag' },
+        { value: 'show', label: 'Show' },
+
     ]
+
+    useEffect(() => {
+        console.log("value: ", place);
+    }, [place]);
 
 
 
@@ -70,7 +85,16 @@ const EventDetails = () => {
                     <div className="field pt-0">
                         <label className="label">Location</label>
                         <div className="control">
-                            <input className="input" required type="text"  onChange={handleChange} placeholder="e.g 84 Wilson street" name="eventLocation"/>
+                            <GooglePlacesAutocomplete apiKey="AIzaSyDB3m9IgLnTqEBC-GxuHeuAHjSkyyJZwKw"
+                                                      selectProps={{
+                                                          value: place,
+                                                          onChange: setPlace,
+                                                          isClearable: true
+                                                      }}
+                                                      minLengthAutocomplete={3}
+                                                      autocompletionRequest={{ componentRestrictions: { country:["UK"], }, types: ['geocode'], }}
+                                                      name={'eventAddress'}
+                                                      />
                         </div>
                     </div>
                     <div className="field pt-0">
@@ -109,7 +133,7 @@ const EventDetails = () => {
                                     <span className="icon">
                                         <FontAwesomeIcon icon={faMapMarker}/>
                                 </span>
-                                <p className="pl-1 is-multiline is-customSize">Placeholder, Placeholder</p>
+                                <p className="pl-1 is-multiline is-customSize">{place === null ? 'Placeholder,Placeholder' : place.label}</p>
                                 </span>
                             </div>
                             <div className="column is-full pl-2 pt-2 pb-0">

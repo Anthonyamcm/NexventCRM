@@ -37,8 +37,7 @@ const EventDetails = () => {
         handleNext,
         handleBack,
         NexventUser,
-    } = useContext(CreateEventContext), step2RequireFields = ['eventTitle'], nextStepperHandler = () => {
-
+    } = useContext(CreateEventContext),nextStepperHandler = () => {
         step3Context(step3Details);
         handleNext();
     }, previousStepperHandler = () => {

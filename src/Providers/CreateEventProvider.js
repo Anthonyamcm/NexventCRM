@@ -7,6 +7,7 @@ export const CreateEventContext = React.createContext();
 
 const steps = [
     'Image',
+    'Info',
     'Details',
     'Review Event',
 ];
@@ -15,6 +16,7 @@ export const CreateEventProvider = ({ children }) => {
     const [step1Context, setStep1Context] = useState(null);
     const [step2Context, setStep2Context] = useState(null);
     const [step3Context, setStep3Context] = useState(null);
+    const [step4Context, setStep4Context] = useState(null);
     const [imageContext, setImageContext] = useState(null);
 
     const getDatesInTimeStamp = (selectedDates) => {
@@ -42,6 +44,7 @@ export const CreateEventProvider = ({ children }) => {
             ...step1Context,
             ...step2Context,
             ...step3Context,
+            ...step4Context,
             ...imageContext,
         };
         EventObject.selectedDates = getDatesInTimeStamp(EventObject.selectedDates);
@@ -72,6 +75,8 @@ export const CreateEventProvider = ({ children }) => {
                 setStep2Context,
                 step3Context,
                 setStep3Context,
+                step4Context,
+                setStep4Context,
                 imageContext,
                 setImageContext,
                 submitEventHandler,

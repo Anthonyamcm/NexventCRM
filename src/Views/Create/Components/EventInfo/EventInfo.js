@@ -4,7 +4,8 @@ import fontawesome from '@fortawesome/fontawesome'
 import {faCalendarAlt, faClock, faMapMarker, faUpload} from '@fortawesome/free-solid-svg-icons';
 import {CreateEventContext} from '../../../../Providers/CreateEventProvider';
 import NextPageButton from "../../../../Components/NextPageButton/NextPageButton";
-import Select from 'react-select'
+import SingleDate from "../../../../Components/SingleDatePicker/SingleDate";
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 
 
 fontawesome.library.add(faClock, faCalendarAlt,faMapMarker, faUpload);
@@ -12,72 +13,73 @@ fontawesome.library.add(faClock, faCalendarAlt,faMapMarker, faUpload);
 
 
 
-const EventDetails = () => {
+const EventInfo = () => {
+
+
+
+    const [place, setPlace] = useState(null);
+
+
 
     useEffect(() => {
-        if (step3Context) {
-            setStep3Details(step3Context);
+        if (step2Context) {
+            setStep2Details(step2Context);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const [selectedOptions, setSelectedOptions] = useState([]);
 
-    const [buttonDisabled, setButtonDisabled] = useState(true), [step3Details, setStep3Details] = useState({
+    const [buttonDisabled, setButtonDisabled] = useState(true), [step2Details, setStep2Details] = useState({
         eventAddress: null,
-        eventDescription: '',
-        tags: [],
+        eventDate:[],
+        eventTime:[]
 
     }), {
-        step3Context,
-        setStep3Context,
-        step1Context,
         step2Context,
+        setStep2Context,
+        step1Context,
         imageContext,
         handleNext,
         handleBack,
         NexventUser,
     } = useContext(CreateEventContext), step2RequireFields = ['eventTitle'], nextStepperHandler = () => {
 
-        step3Context(step3Details);
+        step2Context(step2Details);
         handleNext();
     }, previousStepperHandler = () => {
         handleBack();
     }, handleChange = (event) => {
-        setStep3Details({
-            ...step3Details,
+        setStep2Details({
+            ...step2Details,
             [event.target.name]: event.target.value,
         });
-    }, setValue = (selectedOptions) => {
-        selectedOptions.map( selectedOption =>
-            setSelectedOptions([ ...selectedOptions, selectedOption.label])
-        );
-        console.log(selectedOptions)
-    }, {eventAddress, tags, eventDescription} = step3Details;
+        console.log(step2Details.eventAddress)
+    }, {eventAddress, eventDate, eventTime} = step2Details;
 
-
-    const options = [
-        { value: 'festival', label: 'Festival' },
-        { value: 'performance', label: 'Performance' },
-        { value: 'fair', label: 'Fair' },
-        { value: 'drag', label: 'Drag' },
-        { value: 'show', label: 'Show' },
-
-    ]
     return(
         <div className="columns is-centered is-full p-6 is-desktop">
             <div className="column pr-6 is-two-fifths">
                 <form className="form form-wrapper">
-                    <div className ="field">
-                        <label className="label">Tags</label>
+                    <div className="field pt-0">
+                        <label className="label">Location</label>
                         <div className="control">
-                            <Select options={options} value={selectedOptions.value} isMulti onChange={setValue}/>
+                            <GooglePlacesAutocomplete apiKey="AIzaSyDB3m9IgLnTqEBC-GxuHeuAHjSkyyJZwKw"
+                                                      selectProps={{
+                                                          value: place,
+                                                          onChange: setPlace,
+                                                          isClearable: true
+                                                      }}
+                                                      minLengthAutocomplete={3}
+                                                      autocompletionRequest={{ componentRestrictions: { country:["UK"], }, types: ['geocode'], }}
+                                                      name={'eventAddress'}
+                            />
                         </div>
                     </div>
-                    <div className ="field">
-                        <label className="label">Description</label>
+                    <div className="field pt-0">
+                        <label className="label">Date</label>
                         <div className="control">
-                            <textarea className="textarea has-fixed-size" onChange={handleChange} placeholder="Description of event, can include prices etc " name='eventDescription'/>
+                            <SingleDate/>
                         </div>
                     </div>
                     <NextPageButton buttonDisabled={buttonDisabled}
@@ -98,7 +100,7 @@ const EventDetails = () => {
                                     <span className="icon">
                                         <FontAwesomeIcon icon={faMapMarker}/>
                                 </span>
-                                <p className="pl-1 is-multiline is-customSize">{step2Context.eventAddress === null ? 'Placeholder,Placeholder' : step2Context.eventAddress.label}</p>
+                                <p className="pl-1 is-multiline is-customSize">{place === null ? 'Placeholder,Placeholder' : place.label}</p>
                                 </span>
                             </div>
                             <div className="column is-full pl-2 pt-2 pb-0">
@@ -118,21 +120,12 @@ const EventDetails = () => {
                                 </span>
                             </div>
                             <div className="column is-full pl-5 pr-5 pt-2 pb-0">
-
-                                {selectedOptions.length < 1 ? (
-
-                                        <span className="tag is-primary ml-1 mr-1 mt-2">Placeholder</span>
-
-                                ) : selectedOptions.map(({label}, index) =>
-
-                                    <span className="tag is-primary ml-1 mr-1 mt-2" key={index}>{label}</span>
-                                )
-                                }
+                                    <span className="tag is-primary ml-1 mr-1 mt-2">Placeholder</span>
                             </div>
                             <div className="column is-full pl-5 pr-5 pt-4 pb-0">
                                 <div className ="field">
                                     <div className="control">
-                                        <textarea className="textarea has-fixed-size has-background-match is-customSize" placeholder="Description will go here" defaultValue={step3Details.eventDescription} disabled/>
+                                        <textarea className="textarea has-fixed-size has-background-match is-customSize" placeholder="Description will go here" defaultValue={step2Details.eventDescription} disabled/>
                                     </div>
                                 </div>
                             </div>
@@ -144,4 +137,4 @@ const EventDetails = () => {
     )
 }
 
-export default EventDetails
+export default EventInfo

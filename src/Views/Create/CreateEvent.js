@@ -6,6 +6,7 @@ import ReviewEvent from "./Components/ReviewEvent/ReviewEvent";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import fontawesome from '@fortawesome/fontawesome'
 import {faImages, faEdit, faReceipt} from '@fortawesome/free-solid-svg-icons';
+import EventInfo from "./Components/EventInfo/EventInfo";
 
 fontawesome.library.add(faImages, faEdit, faReceipt);
 
@@ -14,8 +15,10 @@ function getStepContent(step, NexventUser) {
         case 0:
             return <EventImage/>;
         case 1:
-            return <EventDetails/>;
+            return <EventInfo/>;
         case 2:
+            return <EventDetails/>;
+        case 3:
             return <ReviewEvent/>;
         default:
             throw new Error('Unknown step');
@@ -60,7 +63,7 @@ const CreateEvent = () => {
                             </span>
                         </span>
                             <div className="steps-content">
-                                <p className="heading">Event Details</p>
+                                <p className="heading">Event Info</p>
                             </div>
                     </li>
                 ) : (
@@ -71,7 +74,7 @@ const CreateEvent = () => {
                             </span>
                         </span>
                             <div className="steps-content">
-                                <p className="heading">Event Details</p>
+                                <p className="heading">Event Info</p>
                             </div>
                     </li>
                 )
@@ -84,7 +87,7 @@ const CreateEvent = () => {
                             </span>
                         </span>
                             <div className="steps-content">
-                                <p className="heading">c</p>
+                                <p className="heading">Event Details</p>
                             </div>
                     </li>
                 ) : (
@@ -95,8 +98,32 @@ const CreateEvent = () => {
                             </span>
                         </span>
                             <div className="steps-content">
-                                <p className="heading">Review Details</p>
+                                <p className="heading">Event Details</p>
                             </div>
+                    </li>
+                )
+                }
+                {activeStep === 3 ? (
+                    <li className="steps-segment is-active" >
+                        <span className="steps-marker">
+                            <span className="icon">
+                                <FontAwesomeIcon icon={"receipt"}/>
+                            </span>
+                        </span>
+                        <div className="steps-content">
+                            <p className="heading">Review Details</p>
+                        </div>
+                    </li>
+                ) : (
+                    <li className="steps-segment" >
+                        <span className="steps-marker">
+                            <span className="icon">
+                                <FontAwesomeIcon icon={"receipt"}/>
+                            </span>
+                        </span>
+                        <div className="steps-content">
+                            <p className="heading">Review Details</p>
+                        </div>
                     </li>
                 )
                 }

@@ -1,6 +1,7 @@
 @font-face {
   font-family: 'GT Eesti Display';
   src: local('GT Eesti Display'), url(./Fonts/GTEestiDisplay-Medium.ttf) format('ttf');
+  font-style: italic;
   /* other formats include: 'woff2', 'truetype, 'opentype',
                             'embedded-opentype', and 'svg' */
 }

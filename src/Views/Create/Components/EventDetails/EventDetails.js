@@ -1,10 +1,11 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import fontawesome from '@fortawesome/fontawesome'
 import {faCalendarAlt, faClock, faMapMarker, faUpload} from '@fortawesome/free-solid-svg-icons';
 import {CreateEventContext} from '../../../../Providers/CreateEventProvider';
 import NextPageButton from "../../../../Components/NextPageButton/NextPageButton";
 import Select from 'react-select'
+import moment from "moment";
 
 
 fontawesome.library.add(faClock, faCalendarAlt,faMapMarker, faUpload);
@@ -21,10 +22,7 @@ const EventDetails = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const [selectedOptions, setSelectedOptions] = useState([]);
-
     const [buttonDisabled, setButtonDisabled] = useState(true), [step3Details, setStep3Details] = useState({
-        eventAddress: null,
         eventDescription: '',
         tags: [],
 
@@ -34,11 +32,12 @@ const EventDetails = () => {
         step1Context,
         step2Context,
         imageContext,
+        addressContext,
         handleNext,
         handleBack,
         NexventUser,
     } = useContext(CreateEventContext),nextStepperHandler = () => {
-        step3Context(step3Details);
+        setStep3Context(step3Details);
         handleNext();
     }, previousStepperHandler = () => {
         handleBack();
@@ -49,10 +48,28 @@ const EventDetails = () => {
         });
     }, setValue = (selectedOptions) => {
         selectedOptions.map( selectedOption =>
-            setSelectedOptions([ ...selectedOptions, selectedOption.label])
+            setStep3Details({
+                ...step3Details, tags: selectedOptions
+            })
         );
-        console.log(selectedOptions)
-    }, {eventAddress, tags, eventDescription} = step3Details;
+        ;
+        console.log(step3Details)
+    }, {tags, eventDescription} = step3Details;
+
+    const step3RequireFields = ['eventDescription', 'tags'];
+
+    const step3NotComplete = useCallback(() => {
+        return step3RequireFields.some(
+            (requireFiled) => step3Details[requireFiled] === '',
+        );
+
+    }, [step3RequireFields, step3Details]);
+
+    useEffect(() => {
+        if (!step3NotComplete()) {
+            setButtonDisabled(false);
+        }
+    }, [step3NotComplete, setStep3Context, step3Details]);
 
 
     const options = [
@@ -70,7 +87,7 @@ const EventDetails = () => {
                     <div className ="field">
                         <label className="label">Tags</label>
                         <div className="control">
-                            <Select options={options} value={selectedOptions.value} isMulti onChange={setValue}/>
+                            <Select options={options} name={'tags'} value={step3Details.tags.label} isMulti onChange={setValue}/>
                         </div>
                     </div>
                     <div className ="field">
@@ -90,14 +107,14 @@ const EventDetails = () => {
                 <div className=" image-container ml-6 box is-centered">
                     <img src={imageContext.eventImageURL} className={'image-head'}/>
                     <div className={'event-details'}>
-                        <p className={"pl-4 pt-5 title is-4"}>{step1Context.eventTitle === '' ? 'Placeholder' : step1Context.eventTitle}</p>
+                        <p className={"pl-4 pt-5 title is-4"}>{step1Context.eventTitle}</p>
                         <div className="columns is-multiline">
                             <div className="column is-full pl-2 pb-0 pr-0">
                                 <span className="icon-text is-align-items-center pl-4">
                                     <span className="icon">
                                         <FontAwesomeIcon icon={faMapMarker}/>
                                 </span>
-                                <p className="pl-1 is-multiline is-customSize">{step2Context.eventAddress === null ? 'Placeholder,Placeholder' : step2Context.eventAddress.label}</p>
+                                <p className="pl-1 is-multiline is-customSize">{addressContext.label}</p>
                                 </span>
                             </div>
                             <div className="column is-full pl-2 pt-2 pb-0">
@@ -105,7 +122,10 @@ const EventDetails = () => {
                                     <span className="icon">
                                         <FontAwesomeIcon icon={faCalendarAlt}/>
                                     </span>
-                                    <span className="pl-1 is-customSize">31st November 2021 - 31st November 2021</span>
+                                    {step2Context.eventType === "single" && < span className="pl-1 is-customSize">{moment(step2Context.selectedDates).format('Do MMMM YYYY')}</span>
+                                    }
+                                    {step2Context.eventType === "multi" && < span className="pl-1 is-customSize">{moment(step2Context.selectedDates[0]).format('Do MMMM YYYY')} - {moment(step2Context.selectedDates[1]).format('Do MMM YYYY')}</span>
+                                    }
                                 </span>
                             </div>
                             <div className="column is-full pl-2 pt-2 pb-0">
@@ -113,16 +133,16 @@ const EventDetails = () => {
                                     <span className="icon">
                                         <FontAwesomeIcon icon={faClock}/>
                                 </span>
-                                <span className="pl-1 is-customSize">00:00 AM - 00:00 AM</span>
+                                <span className="pl-1 is-customSize">{step2Context.startTime} - {step2Context.endTime}</span>
                                 </span>
                             </div>
                             <div className="column is-full pl-5 pr-5 pt-2 pb-0">
 
-                                {selectedOptions.length < 1 ? (
+                                {step3Details.tags.length < 1 ? (
 
                                         <span className="tag is-primary ml-1 mr-1 mt-2">Placeholder</span>
 
-                                ) : selectedOptions.map(({label}, index) =>
+                                ) : step3Details.tags.map(({label}, index) =>
 
                                     <span className="tag is-primary ml-1 mr-1 mt-2" key={index}>{label}</span>
                                 )
@@ -143,4 +163,4 @@ const EventDetails = () => {
     )
 }
 
-export default EventDetails
+export default EventDetails;

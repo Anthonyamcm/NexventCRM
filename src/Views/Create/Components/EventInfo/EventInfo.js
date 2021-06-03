@@ -53,7 +53,6 @@ const EventInfo = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     const [buttonDisabled, setButtonDisabled] = useState(true), [step2Details, setStep2Details] = useState({
-        eventAddress: null,
         eventType: '',
         eventRecurring: '',
         eventAge: '',
@@ -169,8 +168,9 @@ const EventInfo = () => {
                                 date={date}
                                 onDateChange={(date) => {
                                     setDate(date);
+                                    var date = moment(date).toDate()
                                     setStep2Details({
-                                        ...step2Details,selectedDates: date})
+                                        ...step2Details,selectedDates: [date]})
                                 }}
                                 focused={focused}
                                 onFocusChange={({ focused }) => setFocused(focused)}
@@ -211,8 +211,10 @@ const EventInfo = () => {
                                 onDatesChange={({ startDate, endDate }) => {
                                     setStartDate(startDate);
                                     setEndDate(endDate);
+                                    var sDate = moment(startDate).toDate()
+                                    var eDate = moment(endDate).toDate()
                                     setStep2Details({
-                                        ...step2Details,selectedDates: [startDate, endDate]})
+                                        ...step2Details,selectedDates: [sDate, eDate]})
                                 }}
                                 focusedInput={focusedInput}
                                 onFocusChange={(focusedInput) => setFocusedInput(focusedInput)}

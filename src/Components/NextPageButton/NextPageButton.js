@@ -16,7 +16,7 @@ const NextPageButton = ({ buttonDisabled, handleNext, handleBack }) => {
                 color='primary'
                 onClick={handleNext}
                 disabled={buttonDisabled}
-                className={"button is-primary has-text-white mt-3 ml-3"}>
+                className={"button is-primary has-text-white mt-3 is-pulled-right"}>
                 {activeStep === steps.length - 1 ? 'Submit Event' : 'Next'}
             </button>
         </div>

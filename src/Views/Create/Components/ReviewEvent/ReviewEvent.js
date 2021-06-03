@@ -7,6 +7,8 @@ import moment from "moment";
 
 const ReviewEvent = () => {
 
+    const { submitEventHandler } = useContext(CreateEventContext);
+
 const{
     step1Context,
     step2Context,
@@ -16,6 +18,10 @@ const{
     handleNext,
     handleBack,
 } = useContext(CreateEventContext);
+
+    const previousStepperHandler = () => {
+        handleBack();
+    };
 
 
         return(
@@ -27,6 +33,7 @@ const{
                             <p className={"pl-3 has-text-white title is-3"}>{step1Context.eventTitle === '' ? 'Placeholder' : step1Context.eventTitle}</p>
                         </div>
                     </div>
+
                 </div>
                 <div className="divider is-vertical"/>
                 <div className="column is-half">
@@ -84,8 +91,12 @@ const{
                             </div>
                         </div>
                     </div>
+                    <button className={'is-primary has-text-white button is-pulled-right'} onClick={submitEventHandler}>Publish</button>
+                    <button className={'is-primary has-text-white button is-pulled-right mr-2'} onClick={previousStepperHandler}>Back</button>
+
                 </div>
             </div>
+
         )
 }
 

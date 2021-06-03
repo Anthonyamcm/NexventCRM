@@ -93,7 +93,7 @@ const EventDetails = () => {
                     <div className ="field">
                         <label className="label">Description</label>
                         <div className="control">
-                            <textarea className="textarea has-fixed-size" onChange={handleChange} placeholder="Description of event, can include prices etc " name='eventDescription'/>
+                            <textarea className="textarea has-fixed-size" onChange={handleChange} placeholder="Description of event, can include prices etc " name='eventDescription' value={step3Details.eventDescription}/>
                         </div>
                     </div>
                     <NextPageButton buttonDisabled={buttonDisabled}

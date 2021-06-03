@@ -23,7 +23,6 @@ export const CreateEvent = (databaseObject, NexventUser) => {
                     event_uid: EventsRef.id,
                     business_uid: NexventUser.uid,
                     companyName: NexventUser.companyName,
-                    companyImage: NexventUser?.image || '',
                     interests: 0,
                     timeStamp: new Date().getTime(),
                 },

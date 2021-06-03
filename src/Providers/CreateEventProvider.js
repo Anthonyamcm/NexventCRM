@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { CreateEvent } from '../Firebase/Database/Database';
 import { AuthContext } from './AuthProvider';
+import moment from "moment";
 
 export const CreateEventContext = React.createContext();
 
@@ -20,14 +21,6 @@ export const CreateEventProvider = ({ children }) => {
     const [imageContext, setImageContext] = useState(null);
     const [addressContext, setAddressContext] = useState(null);
 
-    const getDatesInTimeStamp = (selectedDates) => {
-        return selectedDates.map((date) => {
-            return {
-                ...date,
-                timestamp: date.date.getTime(),
-            };
-        });
-    };
 
     const { NexventUser } = useContext(AuthContext);
 
@@ -35,6 +28,15 @@ export const CreateEventProvider = ({ children }) => {
     const handleNext = () => {
         setActiveStep(activeStep + 1);
     };
+
+
+
+    const setAddress = (address) => {
+        return {
+            ...address
+        }
+    }
+
 
     const handleBack = () => {
         setActiveStep(activeStep - 1);
@@ -47,11 +49,9 @@ export const CreateEventProvider = ({ children }) => {
             ...step3Context,
             ...step4Context,
             ...imageContext,
-            ...addressContext,
 
         };
-        EventObject.selectedDates = getDatesInTimeStamp(EventObject.selectedDates);
-
+        EventObject.eventAddress = setAddress(addressContext)
 
         return EventObject;
     };
